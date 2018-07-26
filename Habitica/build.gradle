@@ -114,9 +114,11 @@ dependencies {
     testImplementation 'org.powermock:powermock-module-junit4-rule-agent:1.7.0'
     testImplementation 'org.powermock:powermock-module-junit4-rule:1.7.0'
     testImplementation 'org.powermock:powermock-module-junit4:1.7.0'
+
     //Leak Detection
     debugImplementation 'com.squareup.leakcanary:leakcanary-android:1.5.3'
     releaseImplementation 'com.squareup.leakcanary:leakcanary-android-no-op:1.5.3'
+
     //Push Notifications
     implementation 'com.google.firebase:firebase-core:11.4.2'
     implementation 'com.google.firebase:firebase-messaging:11.4.2'
@@ -128,7 +130,7 @@ dependencies {
         exclude group: 'com.google.android.gms'
         exclude group: 'com.android.support', module: 'multidex'
     }
-    implementation "org.jetbrains.kotlin:kotlin-stdlib-jre7:$kotlin_version"
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
 }
 
 
@@ -179,13 +181,14 @@ android {
             minSdkVersion 21
             dimension "buildType"
         }
-
         prod {
             dimension "buildType"
         }
-
         amazon {
             buildConfigField "String", "STORE", "\"amazon\""
+            dimension "buildType"
+        }
+        robolectric {
             dimension "buildType"
         }
     }
@@ -205,7 +208,7 @@ android {
             java.srcDir file('src/test/java/')
             res.srcDirs = ['res']
         }
-        instrumentTest.setRoot('tests')
+        androidTest.setRoot('tests')
         release { java.srcDirs = ['src/release/java'] }
     }
 
